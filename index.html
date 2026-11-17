@@ -2,186 +2,166 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ركلات الترجيح • تحدي الأساطير</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>جوال الزعيم 💙</title>
 <link href="https://googleapis.com" rel="stylesheet">
 <style>
-:root{--bg:#1b281e;--paper:#ede6d8;--ink:#231f1a;--gold:#d4af37}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
-body{margin:0;background:var(--bg);color:#fff;font-family:'Cairo',sans-serif;padding:8px;text-align:center}
-.wrap{max-width:520px;margin:0 auto}
-h1{font-family:'Aref Ruqaa',serif;font-size:32px;margin:2px 0 6px;color:var(--gold)}
-.hud{display:flex;justify-content:space-between;align-items:center;background:#ffffff14;padding:8px 14px;border-radius:14px;margin-bottom:8px}
-.dots{display:flex;gap:6px;direction:ltr}
-.dot{width:18px;height:18px;border-radius:50%;background:#ffffff33;border:2px solid #fff6}
-.dot.g{background:#4cd964;border-color:#fff}
-.dot.m{background:#ff3b30;border-color:#fff}
-.score{font-size:16px;font-weight:800;color:var(--gold)}
-canvas{width:100%;aspect-ratio:4/5;background:#2e7d32;border-radius:18px;display:block;box-shadow:0 10px 30px #0006;cursor:pointer;touch-action:manipulation}
-.msg{height:28px;font-size:18px;font-weight:800;margin:6px 0;color:var(--gold)}
-.players{display:flex;gap:8px;overflow-x:auto;padding:6px 2px;scrollbar-width:none}
-.players::-webkit-scrollbar{display:none}
-.p-btn{flex:none;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;opacity:.6;transition:.2s}
-.p-btn.act{opacity:1;transform:scale(1.08)}
-.p-btn img{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid #fff}
-.p-btn.act img{border-color:var(--gold);box-shadow:0 0 10px var(--gold)}
-.p-btn span{font-size:10px;font-weight:700}
-button.rst{margin-top:8px;border:0;background:var(--gold);color:#1b281e;padding:8px 22px;border-radius:14px;font-family:inherit;font-weight:800;font-size:14px;cursor:pointer}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
+body{font-family:-apple-system,BlinkMacSystemFont,'Cairo',sans-serif;background:#050e1d;color:#fff;height:100dvh;overflow:hidden;position:relative}
+.wp{position:fixed;inset:0;background:radial-gradient(circle at 50% 18%,#0d47a1 0%,#061838 60%,#020814 100%);z-index:1}
+.island{position:fixed;top:10px;left:50%;transform:translateX(-50%);width:115px;height:30px;background:#000;border-radius:20px;z-index:20;box-shadow:0 2px 10px #0008}
+.screen{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .35s}
+.hide{opacity:0;pointer-events:none;transform:scale(.95)}
+
+/* Lock Screen */
+.lock{justify-content:space-between;padding:52px 18px 22px;z-index:5}
+.lock.unlocked{transform:translateY(-100%);opacity:0;pointer-events:none}
+.clock{text-align:center}
+.date{font-size:16px;font-weight:600;color:#90caf9}
+.time{font-size:74px;font-weight:700;line-height:1;letter-spacing:-2px}
+.notifs{display:flex;flex-direction:column;gap:10px;margin:auto 0 20px}
+.notif{background:rgba(13,27,54,.78);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(144,202,249,.25);border-radius:18px;padding:13px 15px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.notif:active{transform:scale(.97)}
+.n-ic{width:40px;height:40px;border-radius:11px;background:#25d366;display:flex;align-items:center;justify-content:center;font-size:20px;flex:none;position:relative}
+.badge{position:absolute;top:-5px;right:-5px;background:#ff3b30;color:#fff;font-size:10px;font-weight:800;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.n-body{flex:1;text-align:right}
+.n-top{display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px}
+.n-top b{font-size:13.5px}
+.n-top span{color:#90caf9;font-size:11px}
+.n-txt{font-size:13px;color:rgba(255,255,255,.9)}
+.swipe{background:rgba(255,255,255,.15);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.2);border-radius:22px;padding:11px;text-align:center;font-size:13px;font-weight:700;margin-bottom:16px;cursor:pointer;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.bar{height:5px;width:130px;background:#fff;border-radius:10px;margin:0 auto;opacity:.85}
+
+/* Home Screen */
+.home{padding:60px 22px 24px;justify-content:space-between}
+.widget{background:rgba(13,43,92,.65);backdrop-filter:blur(16px);border:1px solid rgba(144,202,249,.25);border-radius:22px;padding:16px;display:flex;justify-content:space-between;align-items:center}
+.widget b{font-size:18px;display:block;color:#fff}
+.widget span{font-size:12px;color:#90caf9}
+.apps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px 12px;margin-top:24px}
+.app{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
+.app:active .ic{transform:scale(.9)}
+.ic{width:60px;height:60px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 6px 16px rgba(0,0,0,.35);position:relative;transition:.15s}
+.app span{font-size:11px;font-weight:700;text-shadow:0 1px 4px #000}
+.dock{background:rgba(255,255,255,.15);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:26px;padding:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+
+/* Apps Windows */
+.win{background:#0b141a;z-index:10;padding-top:46px}
+.w-head{background:#1f2c34;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #2a3942}
+.back{font-size:20px;color:#53bdeb;cursor:pointer;padding:2px 6px}
+.chat{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background-image:radial-gradient(#1f2c34 1px,transparent 1px);background-size:18px 18px}
+.msg{max-width:86%;background:#1f2c34;padding:8px 11px;border-radius:12px;align-self:flex-start}
+.msg.me{background:#005c4b;align-self:flex-end}
+.snd{font-size:11.5px;font-weight:800;display:block;margin-bottom:2px}
+.txt{font-size:13.5px;line-height:1.4}
+.grid8{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;margin-top:6px;border-radius:10px;overflow:hidden}
+.ph{position:relative;aspect-ratio:4/3;background:linear-gradient(135deg,#0d47a1,#1976d2);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6px}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph .cap{position:relative;z-index:2;background:rgba(0,0,0,.6);padding:3px 6px;border-radius:6px;font-size:10px;font-weight:700}
+.ph.ok .cap{position:absolute;bottom:4px;left:4px;right:4px}
+
+/* Photos App */
+.photos-win{background:#000}
+.p-grid{flex:1;overflow-y:auto;padding:8px;display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+
+/* Viewer */
+.viewer{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.96);display:none;flex-direction:column;justify-content:space-between;padding:50px 16px 24px}
+.viewer.open{display:flex}
+.v-box{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.v-box img{max-width:100%;max-height:62dvh;border-radius:12px}
+.v-fb{width:260px;height:260px;border-radius:20px;background:linear-gradient(135deg,#0d47a1,#1976d2);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;border:2px solid #d4af37}
+.v-nav{display:flex;justify-content:space-between;padding:0 20px}
+.v-nav button{background:#1f2c34;color:#fff;border:0;padding:9px 20px;border-radius:12px;font-family:inherit;font-weight:700}
 </style>
 </head>
 <body>
-<div class="wrap">
-<h1>ركلات الترجيح</h1>
-<div class="hud">
-<div class="score" id="sc">الأهداف: 0 / 5</div>
-<div class="dots" id="dots"></div>
+<div class="wp"></div>
+<div class="island"></div>
+
+<!-- شاشة القفل -->
+<div class="screen lock" id="lock">
+<div class="clock">
+<div class="date" id="dStr">الثلاثاء، ١٧ نوفمبر</div>
+<div class="time" id="tStr">21:00</div>
 </div>
-<canvas id="cv" width="400" height="500"></canvas>
-<div class="msg" id="msg">اضغط داخل المرمى للتسديد!</div>
-<div class="players" id="plist"></div>
-<button class="rst" onclick="resetGame()">إعادة المباراة</button>
+<div class="notifs">
+<div class="notif" onclick="openApp('wa')">
+<div class="n-ic">💬<span class="badge">8</span></div>
+<div class="n-body">
+<div class="n-top"><b>واتساب • قروب الزعيم 💙</b><span>الآن</span></div>
+<div class="n-txt">📷 أرسل 8 صور: أرشيف بطولات آسيا والزعيم كاملة 🏆🔥</div>
 </div>
+</div>
+<div class="notif" onclick="unlock()">
+<div class="n-ic" style="background:#0d47a1">🏆</div>
+<div class="n-body">
+<div class="n-top"><b>كبير آسيا</b><span>منذ دقيقتين</span></div>
+<div class="n-txt">افتح الجوال وتصفح ألبوم الذهب</div>
+</div>
+</div>
+</div>
+<div>
+<div class="swipe" onclick="unlock()">اسحب للأعلى أو اضغط لفتح الجوال ↑</div>
+<div class="bar"></div>
+</div>
+</div>
+
+<!-- الشاشة الرئيسية -->
+<div class="screen home hide" id="home">
+<div>
+<div class="widget">
+<div><b>نادي الهلال السعودي 💙</b><span>زعيم آسيا الأول • سجل البطولات الذهبي</span></div>
+<div style="font-size:34px">🏆</div>
+</div>
+<div class="apps">
+<div class="app" onclick="openApp('wa')"><div class="ic" style="background:#25d366">💬<span class="badge">8</span></div><span>واتساب</span></div>
+<div class="app" onclick="openApp('photos')"><div class="ic" style="background:linear-gradient(135deg,#fff,#e0e0e0);color:#000">🖼️</div><span>الصور</span></div>
+<div class="app" onclick="lockPhone()"><div class="ic" style="background:#2c3e50">🔒</div><span>قفل الشاشة</span></div>
+</div>
+</div>
+<div>
+<div class="dock">
+<div class="app" onclick="openApp('wa')"><div class="ic" style="background:#25d366;width:52px;height:52px">💬</div></div>
+<div class="app" onclick="openApp('photos')"><div class="ic" style="background:#fff;color:#000;width:52px;height:52px">🖼️</div></div>
+<div class="app" onclick="openApp('wa')"><div class="ic" style="background:#0d47a1;width:52px;height:52px">💙</div></div>
+<div class="app" onclick="lockPhone()"><div class="ic" style="background:#1c1c1e;width:52px;height:52px">🔒</div></div>
+</div>
+<div class="bar" style="margin-top:12px"></div>
+</div>
+</div>
+
+<!-- تطبيق الواتساب -->
+<div class="screen win hide" id="wa">
+<div class="w-head">
+<span class="back" onclick="goHome()">➔</span>
+<div style="width:38px;height:38px;border-radius:50%;background:#0d47a1;display:flex;align-items:center;justify-content:center;font-weight:800">💙</div>
+<div><b style="font-size:15px">قروب الزعيم • كبير آسيا 🏆</b><small style="display:block;font-size:11px;color:#8696a0">سامي، ياسر، سالم، نيفيز، ليوناردو، أنت</small></div>
+</div>
+<div class="chat">
+<div class="msg"><span class="snd" style="color:#53bdeb">سامي الجابر</span><div class="txt">يا شباب نزلوا لهم ملف بطولات آسيا والزعيم خلونا نقفل النقاش 💙🏆</div></div>
+<div class="msg"><span class="snd" style="color:#ffb74d">ياسر القحطاني</span><div class="txt">أبشر يا أبو عبدالله، هذه 8 صور تختصر هيمنة الهلال 👇🔥</div><div class="grid8" id="waAlbum"></div></div>
+<div class="msg"><span class="snd" style="color:#81c784">سالم الدوسري</span><div class="txt">كبير آسيا وزعيمها الأول بلا منازع 💪💙</div></div>
+</div>
+</div>
+
+<!-- تطبيق الصور -->
+<div class="screen win photos-win hide" id="photos">
+<div class="w-head" style="background:#111">
+<span class="back" onclick="goHome()">➔</span>
+<b style="font-size:16px">ألبوم بطولات الهلال (8)</b>
+</div>
+<div class="p-grid" id="phAlbum"></div>
+</div>
+
+<!-- عارض الصور -->
+<div class="viewer" id="viewer">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<span style="font-size:24px;cursor:pointer;padding:4px 10px" onclick="viewer.classList.remove('open')">✕</span>
+<span id="vCnt" style="color:#90caf9;font-size:13px">1 / 8</span>
+</div>
+<div class="v-box" id="vBox"></div>
+<div class="v-nav"><button onclick="nav(-1)">السابق</button><button onclick="nav(1)">التالي</button></div>
+</div>
+
 <script>
-const B="https://githubusercontent.com";
-const P=[
- {id:"messi",name:"ميسي",img:B+"messi.jpg.JPEG"},
- {id:"cr7",name:"كريستيانو",img:B+"cr.jpg.JPG"},
- {id:"mara",name:"مارادونا",img:B+"maradona.jpg.JPG"},
- {id:"r9",name:"الظاهرة",img:B+"ronaldo.jpg.JPG"},
- {id:"pele",name:"بيليه",img:B+"pele.jpg.JPG"},
- {id:"zidane",name:"زيدان",img:B+"ziedan.jpg.JPG"},
- {id:"r10",name:"رونالدينيو",img:B+"rone.jpg.jpg"},
- {id:"neymar",name:"نيمار",img:B+"ney.jpg.JPG"},
- {id:"cruyff",name:"كرويف",img:B+"johan.jpg.JPG"},
- {id:"iniesta",name:"إنيستا",img:B+"in.jpg.jpg"},
- {id:"xavi",name:"تشافي",img:B+"xavi.jpg.JPG"},
- {id:"modric",name:"مودريتش",img:B+"luka.jpg.JPG"},
- {id:"beck",name:"بيكنباور",img:B+"binkabowr.jpg.JPG"},
- {id:"difa",name:"دي ستيفانو",img:B+"de.jpg.jpg"}
-];
-let curP=P[0],imgMap={},shots=[],state="idle",t=0;
-let ball={x:200,y:410,r:14,tx:200,ty:410};
-let gk={x:200,y:155,tx:200,ty:155,ang:0,tang:0};
-const actx=new (window.AudioContext||window.webkitAudioContext)();
-
-function tone(f,d,type="sine"){
- const o=actx.createOscillator(),g=actx.createGain();
- o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.15,actx.currentTime);
- g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+d);
- o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+d);
-}
-
-P.forEach((p,i)=>{
- const im=new Image();im.src=p.img;imgMap[p.id]=im;
- const d=document.createElement("div");
- d.className="p-btn"+(i===0?" act":"");
- d.innerHTML=`<img src="${p.img}"><span>${p.name}</span>`;
- d.onclick=()=>{document.querySelectorAll(".p-btn").forEach(x=>x.classList.remove("act"));d.classList.add("act");curP=p;};
- plist.appendChild(d);
-});
-
-function resetGame(){
- shots=[];state="idle";t=0;
- ball={x:200,y:410,r:14,tx:200,ty:410};
- gk={x:200,y:155,tx:200,ty:155,ang:0,tang:0};
- msg.textContent="اضغط داخل المرمى للتسديد!";
- updateHUD();
-}
-
-function updateHUD(){
- const goals=shots.filter(x=>x==="g").length;
- sc.textContent=`الأهداف: ${goals} / 5`;
- dots.innerHTML=[0,1,2,3,4].map(i=>`<div class="dot ${shots[i]||''}"></div>`).join("");
-}
-
-cv.addEventListener("pointerdown",e=>{
- if(state!=="idle"||shots.length>=5)return;
- if(actx.state==="suspended")actx.resume();
- const rect=cv.getBoundingClientRect();
- const cx=(e.clientX-rect.left)*(400/rect.width);
- const cy=(e.clientY-rect.top)*(500/rect.height);
- if(cy>230)return;
-
- ball.tx=Math.max(65,Math.min(335,cx));
- ball.ty=Math.max(85,Math.min(185,cy));
-
- const zones=[{x:95,y:120,a:-.7},{x:95,y:165,a:-1.1},{x:200,y:150,a:0},{x:305,y:120,a:.7},{x:305,y:165,a:1.1}];
- const pick=zones[Math.floor(Math.random()*zones.length)];
- gk.tx=pick.x;gk.ty=pick.y;gk.tang=pick.a;
- state="kick";t=0;
- tone(140,.15,"triangle");
-});
-
-function loop(){
- t+=0.045;
- if(state==="kick"){
-  ball.x+=(ball.tx-ball.x)*0.16;
-  ball.y+=(ball.ty-ball.y)*0.16;
-  ball.r=14-Math.min(1,t)*4.5;
-  gk.x+=(gk.tx-gk.x)*0.14;
-  gk.y+=(gk.ty-gk.y)*0.14;
-  gk.ang+=(gk.tang-gk.ang)*0.14;
-
-  if(t>=1){
-   const dist=Math.hypot(ball.tx-gk.tx,ball.ty-gk.ty);
-   const saved=dist<42;
-   if(saved){
-    shots.push("m");msg.textContent="تصدّى لها الحارس! ❌";tone(110,.3,"sawtooth");
-   }else{
-    shots.push("g");msg.textContent="قووووووول! ⚽🔥";tone(520,.15);setTimeout(()=>tone(680,.25),120);
-   }
-   updateHUD();
-   state="wait";
-   setTimeout(()=>{
-    if(shots.length>=5){
-     const g=shots.filter(x=>x==="g").length;
-     msg.textContent=g>=3?`مبروك! فزت بنتيجة ${g} من 5 🏆`:`انتهت المباراة (${g} من 5) حاول مجدداً!`;
-    }else{
-     ball={x:200,y:410,r:14,tx:200,ty:410};
-     gk={x:200,y:155,tx:200,ty:155,ang:0,tang:0};
-     state="idle";msg.textContent="سدد الركلة التالية!";
-    }
-   },1100);
-  }
- }
- draw();
- requestAnimationFrame(loop);
-}
-
-function draw(){
- const c=cv.getContext("2d");
- c.fillStyle="#2e7d32";c.fillRect(0,0,400,500);
- for(let i=0;i<10;i++){if(i%2){c.fillStyle="#256a29";c.fillRect(0,i*50,400,50);}}
-
- c.strokeStyle="#ffffffaa";c.lineWidth=3;
- c.strokeRect(25,185,350,240);
- c.strokeRect(95,185,210,95);
- c.beginPath();c.arc(200,410,4,0,7);c.fillStyle="#fff";c.fill();
-
- c.fillStyle="#ffffff22";c.fillRect(55,75,290,110);
- c.strokeStyle="#ffffff55";c.lineWidth=1;
- for(let x=55;x<=345;x+=14){c.beginPath();c.moveTo(x,75);c.lineTo(x,185);c.stroke();}
- for(let y=75;y<=185;y+=14){c.beginPath();c.moveTo(55,y);c.lineTo(345,y);c.stroke();}
- c.strokeStyle="#fff";c.lineWidth=6;c.strokeRect(55,75,290,110);
-
- c.save();c.translate(gk.x,gk.y);c.rotate(gk.ang);
- c.fillStyle="#ff9800";c.beginPath();c.roundRect(-14,-22,28,44,8);c.fill();
- c.fillStyle="#ffe0b2";c.beginPath();c.arc(0,-30,10,0,7);c.fill();
- c.fillStyle="#fff";c.beginPath();c.arc(-22,-10,7,0,7);c.arc(22,-10,7,0,7);c.fill();
- c.restore();
-
- const im=imgMap[curP.id];
- c.save();c.beginPath();c.arc(135,435,26,0,7);c.clip();
- if(im&&im.complete)c.drawImage(im,109,409,52,52);
- c.restore();
- c.strokeStyle="#d4af37";c.lineWidth=2.5;c.beginPath();c.arc(135,435,26,0,7);c.stroke();
-
- c.fillStyle="#0004";c.beginPath();c.ellipse(ball.x,ball.y+ball.r+3,ball.r,ball.r*.4,0,0,7);c.fill();
- c.fillStyle="#fff";c.beginPath();c.arc(ball.x,ball.y,ball.r,0,7);c.fill();
- c.strokeStyle="#222";c.lineWidth=1.5;c.stroke();
- c.fillStyle="#222";c.beginPath();c.arc(ball.x,ball.y,ball.r*.4,0,7);c.fill();
-}
-resetGame();loop();
-</script>
-</body>
-</html>
+const ITEMS=[
